@@ -77,6 +77,17 @@
       })
     }
 
+     function searchType(){
+      let name=$("#type").val();
+      let TestDataClass=ncmb.DataStore(db);
+      TestDataClass
+      .equalTo("type",type)
+      .fetchAll()
+      .then(function(results){
+        showResults(results);
+      })
+    }
+
      function searchBase(){
       let level=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
