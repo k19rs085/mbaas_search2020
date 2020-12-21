@@ -12,15 +12,10 @@
     // NCMB アクセスの準備
     let ncmb = new NCMB(appKey, clientKey);
     // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
-    const db = "SearchTest";
-    // テスト用データを用意
-    const init_data = [
-      {name: "blue eyes white dragon", level: 8, attack: 3000, defence: 2500},
-      {name: "dark magician", level: 7, attack: 2500, defence: 2100},
-      {name: "jacks knight", level: 5, attack: 1900, defence: 1000},
-      {name: "queens knight", level: 4, attack: 1500, defence: 1600},
-      {name: "kings knight", level: 4, attack: 1600, defence: 1400},
-    ];
+    const db = "Search";
+
+
+  
 
     $(function() {
       let TestDataClass = ncmb.DataStore(db);
@@ -31,9 +26,7 @@
             let newRecord = new TestDataClass();
             newRecord
             .set("name", init_data[i].name)
-            .set("level", init_data[i].level)
-            .set("attack", init_data[i].attack)
-            .set("defence", init_data[i].defence)
+            .set("Base", init_data[i].Base)
             .save();
             // bad busy loop...
             let startMsec = new Date();
@@ -45,6 +38,10 @@
         }
       })
     })
+
+    function enter(){
+      
+    }
 
     function fetchAll() {
       let TestDataClass = ncmb.DataStore(db); 
@@ -61,9 +58,7 @@
         // 各データを収めた表の列を生成
         msg += "<tr>";
         msg += "<td>" + results[i].name + "</td>";
-        msg += "<td class='num'>" + results[i].level + "</td>";
-        msg += "<td class='num'>" + results[i].attack + "</td>";
-        msg += "<td class='num'>" + results[i].defence + "</td>";
+        msg += "<td class='num'>" + results[i].Base + "</td>";
         msg += "</tr>";
       }
       // テーブルのテイラを生成
@@ -82,33 +77,33 @@
       })
     }
 
-     function searchLevel(){
-      let level=parseInt($("#level").val(),10);
+     function searchBase(){
+      let level=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
-      .equalTo("level",level)
+      .equalTo("Base",Base)
       .fetchAll()
       .then(function(results){
         showResults(results);
       })
     }
 
-     function searchLevelLT(){
-      let level=parseInt($("#level").val(),10);
+     function searchBaseLT(){
+      let level=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
-      .lessThan("level",level)
+      .lessThan("Base",Base)
       .fetchAll()
       .then(function(results){
         showResults(results);
       })
     }
 
-    function searchLevelGT(){
-      let level=parseInt($("#level").val(),10);
+    function searchBaseGT(){
+      let level=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
-      .greaterThan("level",level)
+      .greaterThan("Base",Base)
       .fetchAll()
       .then(function(results){
         showResults(results);
@@ -120,19 +115,19 @@
   <h1>mBaaS search</h1>
   <div>
     <label for="name">name:</label>
-    <input id="name" type="text" placeholder="monster name">
+    <input id="name" type="text" placeholder="pokemon name">
   </div>
   <div>
-    <label for="level">level:</label>
-    <input id="level" type="number" placeholder="monster level">
+    <label for="Base">Base:</label>
+    <input id="Base" type="number" placeholder="pokemon basestats">
   </div>
   <div id="button">
     <button class="btn" onclick="fetchAll()">Fetch All</button>
     <button class="btn" onclick="searchName()">Name</button>
     <br>
-    <button class="btn" onclick="searchLevelLT()">Level &lt;</button>
-    <button class="btn" onclick="searchLevel()">Level</button>
-    <button class="btn" onclick="searchLevelGT()">Level &gt;</button>
+    <button class="btn" onclick="searchBaseLT()">Base &lt;</button>
+    <button class="btn" onclick="searchBase()">Base</button>
+    <button class="btn" onclick="searchBaseGT()">Base &gt;</button>
   </div>
   <div id="message">initializing...</div>
 </body>
