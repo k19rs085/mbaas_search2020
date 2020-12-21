@@ -14,9 +14,6 @@
     // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
     const db = "Search";
 
-
-  
-
     $(function() {
       let TestDataClass = ncmb.DataStore(db);
       TestDataClass.fetchAll() // 全件取得してみる
@@ -27,6 +24,7 @@
             newRecord
             .set("name", init_data[i].name)
             .set("Base", init_data[i].Base)
+            .set("type", init_data[i].type)
             .save();
             // bad busy loop...
             let startMsec = new Date();
@@ -40,6 +38,7 @@
     })
 
     function enter(){
+
       
     }
 
@@ -53,7 +52,7 @@
 
     function showResults(results) {
       // テーブルのヘッダを生成
-      let msg="<table><tr><th>name</th><th>Lvl</th><th>attack</th><th>defence</th></tr>";
+      let msg="<table><tr><th>name</th><th>Base</th></tr>";
       for(let i=0; i<results.length; i++) {
         // 各データを収めた表の列を生成
         msg += "<tr>";
@@ -121,10 +120,14 @@
     <label for="Base">Base:</label>
     <input id="Base" type="number" placeholder="pokemon basestats">
   </div>
+   <div>
+    <label for="type">type:</label>
+    <input id="type" type="text" placeholder="pokemon type">
+  </div>
   <div id="button">
     <button class="btn" onclick="enter()">Enter</button>
-    <button class="btn" onclick="fetchAll()">Fetch All</button>
     <button class="btn" onclick="searchName()">Name</button>
+    <button class="btn" onclick="fetchAll()">Fetch All</button>
     <br>
     <button class="btn" onclick="searchBaseLT()">Base &lt;</button>
     <button class="btn" onclick="searchBase()">Base</button>
