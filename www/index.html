@@ -15,20 +15,19 @@
     const db = "Search";
 
     const poke_data = [
-      {name: "blue eyes white dragon", Base: 8, type: iwa},
-      {name: "blue eyes white drago", Base: 8, type: h},
-      {name: "blue eyes white dragn", Base: 8, type: a},
-      {name: "blue eyes white draon", Base: 8, type: e},
-      {name: "blue eyes white drgon", Base: 8, type: uasefmv},
-      {name: "blue eyes white dagon", Base: 8, type: mcdoe}
+      {name: "Mimikyu", Base: 476, type: Ghost,Fairy},
+      {name: "Gradevoir", Base: 518, type: Psychic,Fairy},
+      {name: "Garchomp", Base: 600, type: Dragon,Ground},
+      {name: "Raypuaza", Base: 680, type: Dragon,Fling},
+      {name: "Metagross", Base: 600, type: Psychic,Steel},
     ];
 
 
     $(function() {
       let TestDataClass = ncmb.DataStore(db);
       TestDataClass.fetchAll() // 全件取得してみる
-      .then(function(result){
-        if(result.length < poke_data.length) { // 登録済み件数をチェック
+      .then(function(results){
+        if(results.length < poke_data.length) { // 登録済み件数をチェック
           for(let i=0; i<poke_data.length; i++) { // テスト用データを登録
             let newRecord = new TestDataClass();
             newRecord
@@ -51,20 +50,20 @@
     function fetchAll() {
       let TestDataClass = ncmb.DataStore(db); 
       TestDataClass.order("name",false).fetchAll()
-      .then(function(result) {
-        showResults(result);
+      .then(function(results) {
+        showResults(results);
       })
     }
 
-    function showResults(result) {
+    function showResults(results) {
       // テーブルのヘッダを生成
       let msg="<table><tr><th>name</th><th>Base</th><th>type</th></tr>";
-      for(let i=0; i<result.length; i++) {
+      for(let i=0; i<results.length; i++) {
         // 各データを収めた表の列を生成
         msg += "<tr>";
-        msg += "<td>" + result[i].name + "</td>";
-        msg += "<td class='num'>" + result[i].Base + "</td>";
-        msg += "<td>" + result[i].type + "</td>";
+        msg += "<td>" + results[i].name + "</td>";
+        msg += "<td class='num'>" + results[i].Base + "</td>";
+        msg += "<td>" + results[i].type + "</td>";
         msg += "</tr>";
       }
       // テーブルのテイラを生成
@@ -78,8 +77,8 @@
       TestDataClass
       .equalTo("name",name)
       .fetchAll()
-      .then(function(result){
-        showResults(result);
+      .then(function(results){
+        showResults(results);
       })
     }
 
@@ -89,8 +88,8 @@
       TestDataClass
       .equalTo("type",type)
       .fetchAll()
-      .then(function(result){
-        showResults(result);
+      .then(function(results){
+        showResults(results);
       })
     }
 
@@ -100,8 +99,8 @@
       TestDataClass
       .equalTo("Base",Base)
       .fetchAll()
-      .then(function(result){
-        showResults(result);
+      .then(function(results){
+        showResults(results);
       })
     }
 
@@ -111,8 +110,8 @@
       TestDataClass
       .lessThan("Base",Base)
       .fetchAll()
-      .then(function(result){
-        showResults(result);
+      .then(function(results){
+        showResults(results);
       })
     }
 
@@ -122,8 +121,8 @@
       TestDataClass
       .greaterThan("Base",Base)
       .fetchAll()
-      .then(function(result){
-        showResults(result);
+      .then(function(results){
+        showResults(results);
       })
     }
     </script>
