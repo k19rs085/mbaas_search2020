@@ -12,14 +12,20 @@
     // NCMB アクセスの準備
     let ncmb = new NCMB(appKey, clientKey);
     // 本アプリで使うクラスの指定。const は定数の宣言。変更できない変数と思えば良い。
-    const db = "Search";
-
+    const db = "Search4";
+     // テスト用データを用意
     const poke_data = [
-      {name: "Mimikyu", Base: 476, type: Ghost,Fairy},
-      {name: "Gradevoir", Base: 518, type: Psychic,Fairy},
-      {name: "Garchomp", Base: 600, type: Dragon,Ground},
-      {name: "Raypuaza", Base: 680, type: Dragon,Fling},
-      {name: "Metagross", Base: 600, type: Psychic,Steel},
+      {name: "mimikyu", Base: 476, Type: "ghost,fairy"},
+      {name: "gradevoir", Base: 518, Type: "psychic,fairy"},
+      {name: "garchomp", Base: 600, Type: "dragon,ground"},
+      {name: "raypuaza", Base: 680, Type: "dragon,fling"},
+      {name: "metagross", Base: 600, Type: "psychic,steel"},
+      {name: "pachirisu", Base: 405, Type: "electric"},
+      {name: "buneary", Base: 350, Type: "normal"},
+      {name: "gliscor", Base: 510, Type: "ground,fling"},
+      {name: "uxie", Base: 580, Type: "psychic"},
+      {name: "heatran", Base: 600, Type: "fire,steel"},
+      {name: "darkrai", Base: 600, Type: "dark"},
     ];
 
 
@@ -33,7 +39,7 @@
             newRecord
             .set("name", poke_data[i].name)
             .set("Base", poke_data[i].Base)
-            .set("type", poke_data[i].type)
+            .set("Type", poke_data[i].Type)
             .save();
             // bad busy loop...
             let startMsec = new Date();
@@ -57,13 +63,13 @@
 
     function showResults(results) {
       // テーブルのヘッダを生成
-      let msg="<table><tr><th>name</th><th>Base</th><th>type</th></tr>";
+      let msg="<table><tr><th>Name</th><th>Base</th><th>Type</th></tr>";
       for(let i=0; i<results.length; i++) {
         // 各データを収めた表の列を生成
         msg += "<tr>";
         msg += "<td>" + results[i].name + "</td>";
         msg += "<td class='num'>" + results[i].Base + "</td>";
-        msg += "<td>" + results[i].type + "</td>";
+        msg += "<td>" + results[i].Type + "</td>";
         msg += "</tr>";
       }
       // テーブルのテイラを生成
@@ -83,10 +89,10 @@
     }
 
      function searchType(){
-      let name=$("#type").val();
+      let Type=$("#Type").val();
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
-      .equalTo("type",type)
+      .equalTo("Type",Type)
       .fetchAll()
       .then(function(results){
         showResults(results);
@@ -94,7 +100,7 @@
     }
 
      function searchBase(){
-      let level=parseInt($("#Base").val(),10);
+      let Base=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
       .equalTo("Base",Base)
@@ -105,7 +111,7 @@
     }
 
      function searchBaseLT(){
-      let level=parseInt($("#Base").val(),10);
+      let Base=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
       .lessThan("Base",Base)
@@ -116,7 +122,7 @@
     }
 
     function searchBaseGT(){
-      let level=parseInt($("#Base").val(),10);
+      let Base=parseInt($("#Base").val(),10);
       let TestDataClass=ncmb.DataStore(db);
       TestDataClass
       .greaterThan("Base",Base)
@@ -138,14 +144,14 @@
     <input id="Base" type="number" placeholder="pokemon basestats">
   </div>
    <div>
-    <label for="type">type:</label>
-    <input id="type" type="text" placeholder="pokemon type">
+    <label for="Type">type:</label>
+    <input id="Type" type="text" placeholder="pokemon type">
   </div>
   <div id="button">
     <button class="btn" onclick="fetchAll()">Fetch All</button>
     <button class="btn" onclick="searchName()">Name</button>
     <button class="btn" onclick="searchType()">Type</button>
-     <br>
+    <br>
     <button class="btn" onclick="searchBaseLT()">Base &lt;</button>
     <button class="btn" onclick="searchBase()">Base</button>
     <button class="btn" onclick="searchBaseGT()">Base &gt;</button>
